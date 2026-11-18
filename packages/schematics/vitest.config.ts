@@ -4,9 +4,7 @@ export default createVitestConfig({
   test: {
     // Schematic fixtures are templates, not tests.
     exclude: ['src/**/files/**'],
-    include: ['test/**/*.spec.ts'],
-    // No schematic tests yet; don't fail the run until some exist.
-    passWithNoTests: true,
+    include: ['src/**/*.test.ts', 'test/**/*.spec.ts'],
     testTimeout: 15000,
     pool: 'forks',
     // Schematic runs share the collection loaded from disk; keep them in one

@@ -2,22 +2,19 @@ import { Path } from '@angular-devkit/core';
 
 export interface HelloWorldOptions {
   /**
-   * The name of the class.
+   * The name to greet. Also used as the generated file name.
    */
   name: string;
   /**
-   * The path to create the class.
+   * The path to create the file in.
    */
   path?: string | Path;
   /**
-   * Application language.
+   * The language of the generated file (ts/js).
    */
-  language?: string;
+  language?: 'ts' | 'js';
   /**
    * The source root path.
    */
   sourceRoot?: string;
-  /**
-   * Specifies if a spec file is generated.
-   */
 }

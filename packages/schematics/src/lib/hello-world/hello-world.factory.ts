@@ -1,63 +1,69 @@
 import {
   apply,
-  filter,
+  applyTemplates,
+  chain,
+  mergeWith,
   move,
-  noop,
   Rule,
   SchematicContext,
   SchematicsException,
   Source,
-  strings,
-  template,
-  Tree,
   url,
 } from '@angular-devkit/schematics';
+import { DEFAULT_LANGUAGE } from '../defaults.js';
+import { mergeSourceRoot, normalizeToKebabOrSnakeCase } from '../../utils/index.js';
 import type { HelloWorldOptions } from './hello-world.schema.js';
-import { join, Path } from '@angular-devkit/core/src/virtual-fs/index';
 
-// orchestrate
+const SUPPORTED_LANGUAGES = ['ts', 'js'];
+
+/**
+ * Orchestrates the schematic: prepare options, resolve the output path, then
+ * merge the generated files into the workspace.
+ */
 export function main(options: HelloWorldOptions): Rule {
-  return (tree: Tree, context: SchematicContext) => {
-    const sourceTemplates = url('./files');
+  options = transform(options);
 
-    options.language = options.language || 'ts';
-
-    options.path = options.path || '/src';
-
-    transform(options);
-    generate(options);
-
-    context.logger.info(`Hello ${options.name}!`);
-
-    return tree;
-  };
+  return chain([mergeSourceRoot(options), mergeWith(generate(options)), logGreeting(options)]);
 }
 
-// transform
-function transform(options: HelloWorldOptions): HelloWorldOptions {
-  const target: HelloWorldOptions = Object.assign({}, options);
+/**
+ * Validates the raw options and applies defaults. Returns a copy; the input is
+ * left untouched and no Tree changes happen here.
+ */
+function transform(source: HelloWorldOptions): HelloWorldOptions {
+  const target: HelloWorldOptions = Object.assign({}, source);
+
   if (!target.name) {
     throw new SchematicsException('Option (name) is required.');
   }
 
+  target.language = target.language ?? (DEFAULT_LANGUAGE as HelloWorldOptions['language']);
+  if (!SUPPORTED_LANGUAGES.includes(target.language!)) {
+    throw new SchematicsException(
+      `Unsupported language "${target.language}". Supported languages: ${SUPPORTED_LANGUAGES.join(', ')}.`,
+    );
+  }
+
+  target.name = normalizeToKebabOrSnakeCase(target.name);
+
   return target;
 }
 
-// generate
+/**
+ * Builds the Source of generated files. It is evaluated lazily so that
+ * `options.path`, set by `mergeSourceRoot`, is read at execution time.
+ */
 function generate(options: HelloWorldOptions): Source {
   return (context: SchematicContext) =>
-    apply(url(join('./files' as Path, options.language!)), [
-      options.name.endsWith('.spec')
-        ? noop()
-        : filter((path) => {
-            const languageExtension = options.language || 'ts';
-            const suffix = `.__specFileSuffix__.${languageExtension}`;
-            return !path.endsWith(suffix);
-          }),
-      template({
-        ...strings,
-        ...options,
-      }),
-      move(options.path!),
+    apply(url(`./files/${options.language}`), [
+      applyTemplates({ name: options.name }),
+      move(options.path ?? ''),
     ])(context);
+}
+
+function logGreeting(options: HelloWorldOptions): Rule {
+  return (tree, context) => {
+    context.logger.info(`Hello ${options.name}!`);
+    return tree;
+  };
 }

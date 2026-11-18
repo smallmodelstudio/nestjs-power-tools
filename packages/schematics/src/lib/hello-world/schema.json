@@ -6,25 +6,27 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "The name of the class.",
+      "description": "The name to greet. Also used as the generated file name.",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use for the class?"
+      "x-prompt": "What name would you like to greet?"
     },
     "path": {
       "type": "string",
       "format": "path",
-      "description": "The path to create the class."
+      "description": "The path to create the file in."
     },
     "language": {
       "type": "string",
-      "description": "Nest class language (ts/js)."
+      "enum": ["ts", "js"],
+      "default": "ts",
+      "description": "The language of the generated file (ts/js)."
     },
     "sourceRoot": {
       "type": "string",
-      "description": "Nest controller source root directory."
+      "description": "The source root directory."
     }
   },
   "required": ["name"]
