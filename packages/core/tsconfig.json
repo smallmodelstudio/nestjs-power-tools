@@ -1,0 +1,11 @@
+{
+  "extends": "@nestjs-power-tools/typescript-config/base.json",
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "sourceMap": false
+  },
+  "files": [],
+  "references": [{ "path": "./tsconfig.lib.json" }, { "path": "./tsconfig.test.json" }]
+}
