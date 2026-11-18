@@ -1,5 +1,5 @@
 import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks/index.js';
 import { applyEdits, modify, parse } from 'jsonc-parser';
 
 export type DependencyType = 'dependencies' | 'devDependencies';

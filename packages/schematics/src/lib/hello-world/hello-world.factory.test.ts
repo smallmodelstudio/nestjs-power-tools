@@ -36,7 +36,9 @@ describe('hello-world factory', () => {
     it('generates a TypeScript file by default', async () => {
       const tree = await run({ name: 'world' });
       expect(tree.files).toEqual(['/world.ts']);
-      expect(tree.readContent('/world.ts')).toBe("export const greeting = 'Hello, world!';\n");
+      expect(tree.readContent('/world.ts')).toBe(
+        "export const greeting: string = 'Hello, world!';\n",
+      );
     });
 
     it('generates a JavaScript file when language is js', async () => {

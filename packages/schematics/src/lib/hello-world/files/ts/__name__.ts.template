@@ -1,1 +1,1 @@
-export const greeting = 'Hello, <%= name %>!';
+export const greeting: string = 'Hello, <%= name %>!';
