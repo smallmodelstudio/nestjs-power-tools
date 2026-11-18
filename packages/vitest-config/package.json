@@ -1,0 +1,27 @@
+{
+  "name": "@nestjs-power-tools/vitest-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "base.js",
+    "base.d.ts"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./base.d.ts",
+      "default": "./base.js"
+    },
+    "./base": {
+      "types": "./base.d.ts",
+      "default": "./base.js"
+    }
+  },
+  "devDependencies": {
+    "vitest": "5.1.0"
+  },
+  "peerDependencies": {
+    "vitest": ">=5.0.0"
+  }
+}

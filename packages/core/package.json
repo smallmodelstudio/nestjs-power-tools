@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@nestjs-power-tools/typescript-config": "workspace:*",
+    "@nestjs-power-tools/vitest-config": "workspace:*",
     "@nestjs/common": "12.5.1",
     "@nestjs/core": "12.5.1",
     "@types/node": "24.0.0",
