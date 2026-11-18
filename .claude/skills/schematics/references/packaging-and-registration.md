@@ -24,7 +24,8 @@ Example:
   "example": {
     "factory": "./lib/example/example.factory#main",
     "description": "Create an example.",
-    "schema": "./lib/example/schema.json"
+    "schema": "./lib/example/schema.json",
+    "aliases": ["ex"]
   }
 }
 ```

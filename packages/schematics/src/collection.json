@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/@angular-devkit/schematics/collection-schema.json",
+  "extends": ["@nestjs/schematics"],
   "schematics": {
     "hello-world": {
       "factory": "./lib/hello-world/hello-world.factory#main",
@@ -10,12 +11,14 @@
     "kafka": {
       "factory": "./lib/kafka/kafka.factory#main",
       "description": "Generate a Kafka client module, service and event controller using @nestjs-power-tools/kafka.",
-      "schema": "./lib/kafka/schema.json"
+      "schema": "./lib/kafka/schema.json",
+      "aliases": ["kf"]
     },
     "pino": {
       "factory": "./lib/pino/pino.factory#main",
       "description": "Generate a Pino logger module and service using @nestjs-power-tools/pino.",
-      "schema": "./lib/pino/schema.json"
+      "schema": "./lib/pino/schema.json",
+      "aliases": ["pn"]
     }
   }
 }
