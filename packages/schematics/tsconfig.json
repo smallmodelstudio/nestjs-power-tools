@@ -1,0 +1,12 @@
+{
+  "extends": "@nestjs-power-tools/typescript-config/base.json",
+  "compilerOptions": {
+    "target": "ES2023",
+    "declaration": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "strictNullChecks": true
+  },
+  "files": [],
+  "references": [{ "path": "./tsconfig.lib.json" }, { "path": "./tsconfig.test.json" }]
+}

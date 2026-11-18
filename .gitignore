@@ -36,3 +36,16 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+# Editors
+.idea
+.vscode
+
+# Logs
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# Claude Code
+.claude/worktrees/

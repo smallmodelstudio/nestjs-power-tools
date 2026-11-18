@@ -1,0 +1,49 @@
+{
+  "name": "@nestjs-power-tools/schematics",
+  "version": "0.0.1",
+  "description": "The generators behind the Nest CLI: scaffold NestJS applications, libraries, modules, controllers, services and CRUD resources.",
+  "keywords": [
+    "cli",
+    "code-generation",
+    "generator",
+    "nest",
+    "nestjs",
+    "scaffolding",
+    "schematics"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "postbuild": "pnpm run copy:collection && pnpm run copy:lib",
+    "build": "rm -rf dist *.tsbuildinfo && tsc -b tsconfig.lib.json",
+    "clean": "del 'src/**/*.{js,d.ts,js.map,d.ts.map}' '!src/**/files/**' '!src/**/workspace/**' '!src/**/*.schema.d.ts'",
+    "copy:collection": "cpx src/collection.json dist && cpx 'src/lib/**/schema.json' dist/lib",
+    "copy:lib": "cpx 'src/lib/**/{files,workspace}/**/*.*' dist/lib && cpx 'src/lib/**/{files,workspace}/**/.!(gitignore)' dist/lib",
+    "check-types": "tsc -b tsconfig.json",
+    "test": "pnpm run clean && NODE_ENV=test NODE_OPTIONS=\"--require tsx/cjs\" vitest run",
+    "test:dev": "NODE_ENV=test NODE_OPTIONS=\"--require tsx/cjs\" vitest"
+  },
+  "dependencies": {
+    "@angular-devkit/core": "22.2.7",
+    "@angular-devkit/schematics": "22.2.7",
+    "jsonc-parser": "3.3.1"
+  },
+  "devDependencies": {
+    "@nestjs-power-tools/typescript-config": "workspace:*",
+    "@types/node": "24.0.0",
+    "cpx2": "9.0.3",
+    "del-cli": "^8.0.0",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vite": "^8.0.0",
+    "vitest": "5.1.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=6.0.0"
+  },
+  "schematics": "./dist/collection.json"
+}
