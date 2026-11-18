@@ -109,9 +109,74 @@ describe('pino factory', () => {
     });
 
     it('preserves existing files', async () => {
-      const tree = await run({ name: 'app' }, nestWorkspace());
+      const tree = await run({ name: 'app' }, nestWorkspace('{"name":"demo"}'));
       expect(tree.readContent('/nest-cli.json')).toBe('{}');
-      expect(tree.readContent('/package.json')).toBe('{}');
+      expect(JSON.parse(tree.readContent('/package.json')).name).toBe('demo');
+    });
+  });
+
+  describe('dependencies', () => {
+    const manifest = (tree: Tree | UnitTestTree) =>
+      JSON.parse(tree.read('/package.json')!.toString());
+
+    it('adds the pino packages to package.json', async () => {
+      const tree = await run({ name: 'app' }, nestWorkspace('{"name":"demo"}'));
+      expect(manifest(tree).dependencies).toEqual({
+        '@nestjs-power-tools/pino': '^0.0.1',
+        pino: '^10.4.0',
+      });
+      expect(manifest(tree).name).toBe('demo');
+    });
+
+    it('keeps an existing version and section', async () => {
+      const tree = await run(
+        { name: 'app' },
+        nestWorkspace(
+          '{"dependencies":{"pino":"^9.0.0"},"devDependencies":{"@nestjs-power-tools/pino":"^1.0.0"}}',
+        ),
+      );
+      expect(manifest(tree).dependencies).toEqual({ pino: '^9.0.0' });
+      expect(manifest(tree).devDependencies).toEqual({ '@nestjs-power-tools/pino': '^1.0.0' });
+    });
+
+    it('schedules one install task using the detected package manager', async () => {
+      const tree = nestWorkspace('{}');
+      tree.create('pnpm-lock.yaml', '');
+      const runner2 = new SchematicTestRunner('.', join(__dirname, '../../collection.json'));
+      await runner2.runSchematic('pino', { name: 'app' }, tree);
+      expect(runner2.tasks).toHaveLength(1);
+      expect(runner2.tasks[0]!.name).toBe('node-package');
+      expect((runner2.tasks[0]!.options as { packageManager: string }).packageManager).toBe('pnpm');
+    });
+
+    it('does not schedule an install when skipInstall is set', async () => {
+      const runner2 = new SchematicTestRunner('.', join(__dirname, '../../collection.json'));
+      const tree = await runner2.runSchematic(
+        'pino',
+        { name: 'app', skipInstall: true },
+        nestWorkspace('{}'),
+      );
+      expect(manifest(tree).dependencies.pino).toBe('^10.4.0');
+      expect(runner2.tasks).toHaveLength(0);
+    });
+
+    it('does not schedule an install when nothing was added', async () => {
+      const runner2 = new SchematicTestRunner('.', join(__dirname, '../../collection.json'));
+      await runner2.runSchematic(
+        'pino',
+        { name: 'app' },
+        nestWorkspace('{"dependencies":{"@nestjs-power-tools/pino":"^0.0.1","pino":"^10.0.0"}}'),
+      );
+      expect(runner2.tasks).toHaveLength(0);
+    });
+
+    it('does nothing without a package.json', async () => {
+      const tree = await run({ name: 'app' });
+      expect(tree.exists('/package.json')).toBe(false);
+    });
+
+    it('rejects an unparseable package.json', async () => {
+      await expect(run({ name: 'app' }, nestWorkspace('[]'))).rejects.toThrow(/package.json/);
     });
   });
 });
