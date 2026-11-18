@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs-power-tools/schematics",
+  "monorepo": true,
+  "root": "packages",
+  "sourceRoot": "packages",
+  "projects": {
+    "core": {
+      "type": "library",
+      "root": "packages/core",
+      "entryFile": "index",
+      "sourceRoot": "packages/core/src",
+      "compilerOptions": { "tsConfigPath": "packages/core/tsconfig.lib.json" }
+    },
+    "http": {
+      "type": "library",
+      "root": "packages/http",
+      "entryFile": "index",
+      "sourceRoot": "packages/http/src",
+      "compilerOptions": { "tsConfigPath": "packages/http/tsconfig.lib.json" }
+    },
+    "kafka": {
+      "type": "library",
+      "root": "packages/kafka",
+      "entryFile": "index",
+      "sourceRoot": "packages/kafka/src",
+      "compilerOptions": { "tsConfigPath": "packages/kafka/tsconfig.lib.json" }
+    },
+    "pino": {
+      "type": "library",
+      "root": "packages/pino",
+      "entryFile": "index",
+      "sourceRoot": "packages/pino/src",
+      "compilerOptions": { "tsConfigPath": "packages/pino/tsconfig.lib.json" }
+    },
+    "redis": {
+      "type": "library",
+      "root": "packages/redis",
+      "entryFile": "index",
+      "sourceRoot": "packages/redis/src",
+      "compilerOptions": { "tsConfigPath": "packages/redis/tsconfig.lib.json" }
+    },
+    "schematics": {
+      "type": "library",
+      "root": "packages/schematics",
+      "entryFile": "index",
+      "sourceRoot": "packages/schematics/src",
+      "compilerOptions": { "tsConfigPath": "packages/schematics/tsconfig.lib.json" }
+    },
+    "sandbox": {
+      "type": "application",
+      "root": "sandbox",
+      "entryFile": "main",
+      "sourceRoot": "sandbox/src",
+      "compilerOptions": { "tsConfigPath": "sandbox/tsconfig.build.json" }
+    }
+  }
+}

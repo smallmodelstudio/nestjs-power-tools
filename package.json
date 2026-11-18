@@ -11,6 +11,9 @@
     "format:check": "oxfmt --check .",
     "prepare": "husky"
   },
+  "dependencies": {
+    "@nestjs/cli": "^12.0.13"
+  },
   "devDependencies": {
     "@commitlint/cli": "21.2.4",
     "@commitlint/config-angular": "21.2.4",
