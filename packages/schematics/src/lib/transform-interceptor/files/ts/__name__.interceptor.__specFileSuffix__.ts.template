@@ -1,0 +1,16 @@
+import { firstValueFrom, of } from 'rxjs';
+import { <%= className %>Interceptor } from './<%= name %>.interceptor<%= importExtension %>';
+
+const context: any = {};
+const handler = (obs: any) => ({ handle: () => obs });
+
+describe('<%= className %>Interceptor', () => {
+  it('should be defined', () => {
+    expect(new <%= className %>Interceptor()).toBeDefined();
+  });
+
+  it('wraps the body in { data }', async () => {
+    const out = new <%= className %>Interceptor().intercept(context, handler(of({ a: 1 })));
+    await expect(firstValueFrom(out)).resolves.toEqual({ data: { a: 1 } });
+  });
+});

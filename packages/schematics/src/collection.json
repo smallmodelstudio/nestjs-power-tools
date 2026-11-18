@@ -19,6 +19,18 @@
       "description": "Generate a Pino logger module and service using @nestjs-power-tools/pino.",
       "schema": "./lib/pino/schema.json",
       "aliases": ["pn"]
+    },
+    "timeout-interceptor": {
+      "factory": "./lib/timeout-interceptor/timeout-interceptor.factory#main",
+      "description": "Generate a request timeout interceptor using @nestjs-power-tools/core, wrapping the Nest interceptor schematic.",
+      "schema": "./lib/timeout-interceptor/schema.json",
+      "aliases": ["ti"]
+    },
+    "transform-interceptor": {
+      "factory": "./lib/transform-interceptor/transform-interceptor.factory#main",
+      "description": "Generate a response envelope interceptor using @nestjs-power-tools/core, wrapping the Nest interceptor schematic.",
+      "schema": "./lib/transform-interceptor/schema.json",
+      "aliases": ["tfi"]
     }
   }
 }

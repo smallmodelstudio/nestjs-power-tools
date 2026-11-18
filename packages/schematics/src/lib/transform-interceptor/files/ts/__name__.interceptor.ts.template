@@ -1,0 +1,6 @@
+import { Injectable } from '@nestjs/common';
+import { TransformInterceptor } from '@nestjs-power-tools/core';
+
+/** Wraps every response body in `{ data }`. */
+@Injectable()
+export class <%= className %>Interceptor<T = unknown> extends TransformInterceptor<T> {}

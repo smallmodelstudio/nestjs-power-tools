@@ -1,0 +1,10 @@
+import { Injectable } from '@nestjs/common';
+import { TimeoutInterceptor } from '@nestjs-power-tools/core';
+
+/** Fails with 408 when the handler takes longer than <%= timeout %>ms. */
+@Injectable()
+export class <%= className %>Interceptor extends TimeoutInterceptor {
+  constructor() {
+    super(<%= timeout %>);
+  }
+}

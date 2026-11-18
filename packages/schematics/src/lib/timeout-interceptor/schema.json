@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsTimeoutInterceptor",
+  "title": "Timeout Interceptor Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the timeout interceptor.",
+      "$default": { "$source": "argv", "index": 0 },
+      "x-prompt": "What name would you like to use for the timeout interceptor?"
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the interceptor in."
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Generate the files in the target path without a folder named after the interceptor."
+    },
+    "spec": {
+      "type": "boolean",
+      "default": true,
+      "description": "Specifies if a spec file is generated."
+    },
+    "specFileSuffix": {
+      "type": "string",
+      "default": "spec",
+      "description": "Specifies the file suffix of spec files."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["ts"],
+      "default": "ts",
+      "description": "The language of the generated files (ts)."
+    },
+    "skipInstall": {
+      "type": "boolean",
+      "default": false,
+      "description": "Add the dependencies to package.json without scheduling an install."
+    },
+    "sourceRoot": { "type": "string", "description": "The source root directory." },
+    "timeout": {
+      "type": "number",
+      "minimum": 1,
+      "default": 5000,
+      "description": "The default timeout of the interceptor, in milliseconds."
+    }
+  },
+  "required": ["name"]
+}

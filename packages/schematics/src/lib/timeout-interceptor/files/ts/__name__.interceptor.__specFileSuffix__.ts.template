@@ -1,0 +1,25 @@
+import { RequestTimeoutException } from '@nestjs/common';
+import { delay, firstValueFrom, of } from 'rxjs';
+import { <%= className %>Interceptor } from './<%= name %>.interceptor<%= importExtension %>';
+
+const context: any = {};
+const handler = (obs: any) => ({ handle: () => obs });
+
+describe('<%= className %>Interceptor', () => {
+  it('should be defined', () => {
+    expect(new <%= className %>Interceptor()).toBeDefined();
+  });
+
+  it('passes fast responses through', async () => {
+    const out = new <%= className %>Interceptor().intercept(context, handler(of('ok')));
+    await expect(firstValueFrom(out)).resolves.toBe('ok');
+  });
+
+  it('throws 408 when too slow', async () => {
+    const out = new <%= className %>Interceptor().intercept(
+      context,
+      handler(of('ok').pipe(delay(<%= timeout %> + 50))),
+    );
+    await expect(firstValueFrom(out)).rejects.toThrow(RequestTimeoutException);
+  });
+});
