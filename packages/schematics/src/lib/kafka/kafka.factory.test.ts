@@ -114,9 +114,65 @@ describe('kafka factory', () => {
     });
 
     it('preserves existing files', async () => {
-      const tree = await run({ name: 'orders' }, nestWorkspace());
+      const tree = await run({ name: 'orders' }, nestWorkspace('{"name":"demo"}'));
       expect(tree.readContent('/nest-cli.json')).toBe('{}');
-      expect(tree.readContent('/package.json')).toBe('{}');
+      expect(JSON.parse(tree.readContent('/package.json')).name).toBe('demo');
+    });
+  });
+
+  describe('dependencies', () => {
+    const manifest = (tree: Tree | UnitTestTree) =>
+      JSON.parse(tree.read('/package.json')!.toString());
+    const newRunner = () => new SchematicTestRunner('.', join(__dirname, '../../collection.json'));
+
+    it('adds the kafka packages to package.json', async () => {
+      const tree = await run({ name: 'orders' }, nestWorkspace('{"name":"demo"}'));
+      expect(manifest(tree).dependencies).toEqual({
+        '@nestjs-power-tools/kafka': '^0.0.1',
+        '@nestjs/microservices': '^12.5.1',
+        kafkajs: '^2.2.4',
+      });
+      expect(manifest(tree).name).toBe('demo');
+    });
+
+    it('keeps an existing version and section', async () => {
+      const tree = await run(
+        { name: 'orders' },
+        nestWorkspace(
+          '{"dependencies":{"kafkajs":"^2.0.0"},"devDependencies":{"@nestjs/microservices":"^11.0.0"}}',
+        ),
+      );
+      expect(manifest(tree).dependencies.kafkajs).toBe('^2.0.0');
+      expect(manifest(tree).dependencies['@nestjs/microservices']).toBeUndefined();
+      expect(manifest(tree).devDependencies).toEqual({ '@nestjs/microservices': '^11.0.0' });
+    });
+
+    it('schedules one install task using the detected package manager', async () => {
+      const tree = nestWorkspace('{}');
+      tree.create('yarn.lock', '');
+      const kafkaRunner = newRunner();
+      await kafkaRunner.runSchematic('kafka', { name: 'orders' }, tree);
+      expect(kafkaRunner.tasks).toHaveLength(1);
+      expect(kafkaRunner.tasks[0]!.name).toBe('node-package');
+      expect((kafkaRunner.tasks[0]!.options as { packageManager: string }).packageManager).toBe(
+        'yarn',
+      );
+    });
+
+    it('does not schedule an install when skipInstall is set', async () => {
+      const kafkaRunner = newRunner();
+      const tree = await kafkaRunner.runSchematic(
+        'kafka',
+        { name: 'orders', skipInstall: true },
+        nestWorkspace('{}'),
+      );
+      expect(manifest(tree).dependencies.kafkajs).toBe('^2.2.4');
+      expect(kafkaRunner.tasks).toHaveLength(0);
+    });
+
+    it('does nothing without a package.json', async () => {
+      const tree = await run({ name: 'orders' });
+      expect(tree.exists('/package.json')).toBe(false);
     });
   });
 });

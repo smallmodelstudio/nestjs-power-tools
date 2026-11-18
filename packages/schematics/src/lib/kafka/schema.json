@@ -29,6 +29,11 @@
       "default": "ts",
       "description": "The language of the generated files (ts)."
     },
+    "skipInstall": {
+      "type": "boolean",
+      "default": false,
+      "description": "Add the dependencies to package.json without scheduling an install."
+    },
     "sourceRoot": {
       "type": "string",
       "description": "The source root directory."

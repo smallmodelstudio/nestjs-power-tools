@@ -12,14 +12,28 @@ import {
 } from '@angular-devkit/schematics';
 import { join, normalize } from '@angular-devkit/core';
 import { DEFAULT_LANGUAGE } from '../defaults.js';
-import { isEsmProject, mergeSourceRoot, normalizeToKebabOrSnakeCase } from '../../utils/index.js';
+import {
+  addDependencies,
+  isEsmProject,
+  mergeSourceRoot,
+  normalizeToKebabOrSnakeCase,
+  type PackageDependency,
+} from '../../utils/index.js';
 import type { KafkaOptions } from './kafka.schema.js';
 
 const SUPPORTED_LANGUAGES = ['ts'];
 
+/** Packages the generated files import, or require as peers. */
+const KAFKA_DEPENDENCIES: PackageDependency[] = [
+  { name: '@nestjs-power-tools/kafka', version: '^0.0.1' },
+  { name: '@nestjs/microservices', version: '^12.5.1' },
+  { name: 'kafkajs', version: '^2.2.4' },
+];
+
 /**
  * Orchestrates the schematic: prepare options, resolve the output path, detect
- * the module system, then merge the generated files into the workspace.
+ * the module system, declare the packages the generated code needs, then merge
+ * the generated files into the workspace.
  */
 export function main(options: KafkaOptions): Rule {
   options = transform(options);
@@ -27,6 +41,7 @@ export function main(options: KafkaOptions): Rule {
   return chain([
     mergeSourceRoot(options),
     detectModuleSystem(options),
+    addDependencies(KAFKA_DEPENDENCIES, options),
     mergeWith(generate(options)),
   ]);
 }

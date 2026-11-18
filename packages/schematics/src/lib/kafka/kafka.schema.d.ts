@@ -18,6 +18,10 @@ export interface KafkaOptions {
    */
   language?: 'ts';
   /**
+   * Add the dependencies to package.json without scheduling an install.
+   */
+  skipInstall?: boolean;
+  /**
    * The source root path.
    */
   sourceRoot?: string;
