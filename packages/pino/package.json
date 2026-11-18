@@ -1,0 +1,44 @@
+{
+  "name": "@nestjs-power-tools/pino",
+  "version": "0.0.1",
+  "description": "A Pino-backed NestJS LoggerService with a module and bootstrap helper.",
+  "keywords": [
+    "logger",
+    "logging",
+    "nest",
+    "nestjs",
+    "pino"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist *.tsbuildinfo && tsc -b tsconfig.lib.json",
+    "check-types": "tsc -b tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@nestjs-power-tools/typescript-config": "workspace:*",
+    "@nestjs/common": "12.5.1",
+    "@types/node": "24.0.0",
+    "pino": "10.4.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": ">=11.0.0",
+    "pino": ">=9.0.0"
+  }
+}
