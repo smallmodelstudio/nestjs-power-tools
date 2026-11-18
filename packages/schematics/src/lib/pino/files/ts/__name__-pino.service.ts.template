@@ -1,0 +1,21 @@
+import { Injectable } from '@nestjs/common';
+import { PinoLogger } from '@nestjs-power-tools/pino';
+
+@Injectable()
+export class <%= className %>PinoService {
+  private readonly logger: PinoLogger;
+
+  constructor(logger: PinoLogger) {
+    this.logger = logger.child(<%= className %>PinoService.name);
+  }
+
+  /** Logs an informational message under the "<%= className %>PinoService" context. */
+  info(message: string) {
+    this.logger.log(message);
+  }
+
+  /** Logs an error message, with an optional stack trace. */
+  error(message: string, stack?: string) {
+    this.logger.error(message, stack);
+  }
+}

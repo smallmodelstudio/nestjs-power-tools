@@ -1,0 +1,15 @@
+import { Module } from '@nestjs/common';
+import { PinoLoggerModule, pinoOptionsFromEnv } from '@nestjs-power-tools/pino';
+import { <%= className %>PinoService } from './<%= name %>-pino.service<%= importExtension %>';
+
+@Module({
+  imports: [
+    PinoLoggerModule.forRoot({
+      options: pinoOptionsFromEnv(),
+      isGlobal: false,
+    }),
+  ],
+  providers: [<%= className %>PinoService],
+  exports: [<%= className %>PinoService],
+})
+export class <%= className %>PinoModule {}
