@@ -151,15 +151,15 @@ Validate the structure before performing destructive operations.
 
 When relevant, consider these scenarios:
 
-| Dimension | Scenarios |
-| --- | --- |
-| Workspace | Standard, monorepo |
-| Project | Application, library |
-| Language | TypeScript, JavaScript where supported |
-| Module system | ESM, CommonJS |
-| Source root | Default, custom |
-| Project count | Single, multiple |
-| Configuration | Existing, missing, customised |
+| Dimension     | Scenarios                              |
+| ------------- | -------------------------------------- |
+| Workspace     | Standard, monorepo                     |
+| Project       | Application, library                   |
+| Language      | TypeScript, JavaScript where supported |
+| Module system | ESM, CommonJS                          |
+| Source root   | Default, custom                        |
+| Project count | Single, multiple                       |
+| Configuration | Existing, missing, customised          |
 
 Do not test every possible combination automatically.
 

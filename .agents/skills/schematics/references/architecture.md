@@ -151,16 +151,16 @@ Do not force workspace schematics into the simple declaration pattern.
 
 Use focused responsibilities:
 
-| Concern | Responsibility |
-| --- | --- |
-| Orchestration | Coordinates the lifecycle |
-| Transformation | Prepares incoming options |
-| Generation | Constructs Sources |
-| Discovery | Finds existing workspace elements |
-| Modification | Changes existing files |
-| Dependencies | Updates package dependencies |
-| Tasks | Schedules external operations |
-| Formatting | Processes generated output |
+| Concern        | Responsibility                    |
+| -------------- | --------------------------------- |
+| Orchestration  | Coordinates the lifecycle         |
+| Transformation | Prepares incoming options         |
+| Generation     | Constructs Sources                |
+| Discovery      | Finds existing workspace elements |
+| Modification   | Changes existing files            |
+| Dependencies   | Updates package dependencies      |
+| Tasks          | Schedules external operations     |
+| Formatting     | Processes generated output        |
 
 These responsibilities do not necessarily require separate files.
 

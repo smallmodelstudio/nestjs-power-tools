@@ -139,15 +139,15 @@ When implementing a new schematic:
 
 Consult the relevant references before implementation.
 
-| Reference | Responsibility |
-| --- | --- |
-| `architecture.md` | Repository architecture and design principles |
-| `factory-patterns.md` | Factory structure and Rule composition |
-| `schemas-and-templates.md` | Options, validation and generation |
-| `workspace-and-projects.md` | NestJS projects, applications and monorepos |
-| `dependencies-and-tasks.md` | Dependencies and installation tasks |
-| `testing.md` | Unit and integration testing |
-| `packaging-and-registration.md` | Collection registration and distribution |
+| Reference                       | Responsibility                                |
+| ------------------------------- | --------------------------------------------- |
+| `architecture.md`               | Repository architecture and design principles |
+| `factory-patterns.md`           | Factory structure and Rule composition        |
+| `schemas-and-templates.md`      | Options, validation and generation            |
+| `workspace-and-projects.md`     | NestJS projects, applications and monorepos   |
+| `dependencies-and-tasks.md`     | Dependencies and installation tasks           |
+| `testing.md`                    | Unit and integration testing                  |
+| `packaging-and-registration.md` | Collection registration and distribution      |
 
 Consult multiple references when a task crosses architectural boundaries.
 

@@ -12,10 +12,7 @@ Each schematic exposes a public `main()` function returning an Angular DevKit Ru
 export function main(options: ExampleOptions): Rule {
   options = transform(options);
 
-  return chain([
-    mergeSourceRoot(options),
-    mergeWith(generate(options)),
-  ]);
+  return chain([mergeSourceRoot(options), mergeWith(generate(options))]);
 }
 ```
 
@@ -61,9 +58,7 @@ Integrated schematics may require additional Rule functions.
 Examples:
 
 ```ts
-function addDeclarationToModule(
-  options: ExampleOptions,
-): Rule {
+function addDeclarationToModule(options: ExampleOptions): Rule {
   return (tree, context) => {
     // Discover and modify an existing module.
     return tree;
@@ -72,9 +67,7 @@ function addDeclarationToModule(
 ```
 
 ```ts
-function addRequiredDependencies(
-  options: ExampleOptions,
-): Rule {
+function addRequiredDependencies(options: ExampleOptions): Rule {
   return (tree, context) => {
     // Inspect and update dependencies.
     return tree;
@@ -88,16 +81,16 @@ A dedicated Rule should have one clearly defined responsibility.
 
 Common Angular DevKit operations:
 
-| API | Use |
-| --- | --- |
-| `chain()` | Compose sequential Rules |
-| `mergeWith()` | Merge a Source into a Tree |
-| `apply()` | Apply Source transformations |
-| `url()` | Load templates |
-| `template()` | Interpolate variables |
-| `filter()` | Conditionally include files |
-| `move()` | Set destination paths |
-| `noop()` | Represent an optional no-op |
+| API                | Use                                                   |
+| ------------------ | ----------------------------------------------------- |
+| `chain()`          | Compose sequential Rules                              |
+| `mergeWith()`      | Merge a Source into a Tree                            |
+| `apply()`          | Apply Source transformations                          |
+| `url()`            | Load templates                                        |
+| `template()`       | Interpolate variables                                 |
+| `filter()`         | Conditionally include files                           |
+| `move()`           | Set destination paths                                 |
+| `noop()`           | Represent an optional no-op                           |
 | `branchAndMerge()` | Execute a Rule against a branch and merge its changes |
 
 Understand the semantics of each operation before using it.

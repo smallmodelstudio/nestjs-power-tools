@@ -24,16 +24,11 @@ const LEGACY_NEST_CLI_CONFIG_FILES = ['.nestcli.json', 'nest.json'];
  * Tells the user that a legacy config file is not in use. Stays silent when a
  * supported config file exists.
  */
-export function warnAboutLegacyNestCliConfig(
-  tree: Tree,
-  context: SchematicContext,
-): void {
+export function warnAboutLegacyNestCliConfig(tree: Tree, context: SchematicContext): void {
   if (findNestCliConfigPath(tree)) {
     return;
   }
-  const legacyFile = LEGACY_NEST_CLI_CONFIG_FILES.find((candidate) =>
-    tree.exists(candidate),
-  );
+  const legacyFile = LEGACY_NEST_CLI_CONFIG_FILES.find((candidate) => tree.exists(candidate));
   if (legacyFile) {
     context.logger.warn(
       `The Nest CLI does not load "${legacyFile}", so this schematic ignores it. Move its configuration to "nest-cli.json".`,
@@ -41,10 +36,7 @@ export function warnAboutLegacyNestCliConfig(
   }
 }
 
-export function readJsonFile<T = Record<string, any>>(
-  tree: Tree,
-  path: string,
-): T | null {
+export function readJsonFile<T = Record<string, any>>(tree: Tree, path: string): T | null {
   const buffer = tree.read(path);
   if (!buffer) {
     return null;

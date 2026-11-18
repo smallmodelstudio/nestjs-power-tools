@@ -30,10 +30,7 @@ export function isEsmProject(host: Tree): boolean {
  * @param extraFiles - Additional files to check for in the root directory.
  * @returns True if the current directory is the root directory, otherwise false.
  */
-export function isInRootDirectory(
-  host: Tree,
-  extraFiles: string[] = [],
-): boolean {
+export function isInRootDirectory(host: Tree, extraFiles: string[] = []): boolean {
   const files = NEST_CLI_CONFIG_FILES.concat(extraFiles || []);
   return files.map((file) => host.exists(file)).some((isPresent) => isPresent);
 }
@@ -43,9 +40,9 @@ export function isInRootDirectory(
  * @param options - The options to merge with the source root.
  * @returns A rule to merge the source root with the provided options.
  */
-export function mergeSourceRoot<
-  T extends { sourceRoot?: string; path?: string } = any,
->(options: T): Rule {
+export function mergeSourceRoot<T extends { sourceRoot?: string; path?: string } = any>(
+  options: T,
+): Rule {
   return (host: Tree) => {
     const isInRoot = isInRootDirectory(host, ['tsconfig.json', 'package.json']);
     if (!isInRoot) {

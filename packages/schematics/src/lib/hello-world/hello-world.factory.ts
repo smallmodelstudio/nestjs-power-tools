@@ -1,12 +1,23 @@
-import { apply, filter, move, noop, Rule, SchematicContext, SchematicsException, Source, strings, template, Tree, url } from '@angular-devkit/schematics';
+import {
+  apply,
+  filter,
+  move,
+  noop,
+  Rule,
+  SchematicContext,
+  SchematicsException,
+  Source,
+  strings,
+  template,
+  Tree,
+  url,
+} from '@angular-devkit/schematics';
 import type { HelloWorldOptions } from './hello-world.schema.js';
 import { join, Path } from '@angular-devkit/core/src/virtual-fs/index';
-
 
 // orchestrate
 export function main(options: HelloWorldOptions): Rule {
   return (tree: Tree, context: SchematicContext) => {
-
     const sourceTemplates = url('./files');
 
     options.language = options.language || 'ts';
@@ -21,7 +32,6 @@ export function main(options: HelloWorldOptions): Rule {
     return tree;
   };
 }
-
 
 // transform
 function transform(options: HelloWorldOptions): HelloWorldOptions {
@@ -40,10 +50,10 @@ function generate(options: HelloWorldOptions): Source {
       options.name.endsWith('.spec')
         ? noop()
         : filter((path) => {
-          const languageExtension = options.language || 'ts';
-          const suffix = `.__specFileSuffix__.${languageExtension}`;
-          return !path.endsWith(suffix);
-        }),
+            const languageExtension = options.language || 'ts';
+            const suffix = `.__specFileSuffix__.${languageExtension}`;
+            return !path.endsWith(suffix);
+          }),
       template({
         ...strings,
         ...options,
