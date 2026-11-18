@@ -1,0 +1,18 @@
+import { Module } from '@nestjs/common';
+import { KafkaClientModule, kafkaOptionsFromEnv } from '@nestjs-power-tools/kafka';
+import { <%= tokenName %>_KAFKA_CLIENT } from './<%= name %>-kafka.constants<%= importExtension %>';
+import { <%= className %>KafkaController } from './<%= name %>-kafka.controller<%= importExtension %>';
+import { <%= className %>KafkaService } from './<%= name %>-kafka.service<%= importExtension %>';
+
+@Module({
+  imports: [
+    KafkaClientModule.registerAsync({
+      name: <%= tokenName %>_KAFKA_CLIENT,
+      useFactory: () => kafkaOptionsFromEnv(),
+    }),
+  ],
+  controllers: [<%= className %>KafkaController],
+  providers: [<%= className %>KafkaService],
+  exports: [<%= className %>KafkaService],
+})
+export class <%= className %>KafkaModule {}

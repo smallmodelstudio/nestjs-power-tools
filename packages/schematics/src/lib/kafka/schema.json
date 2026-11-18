@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsKafka",
+  "title": "Kafka Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the Kafka feature. Used for file names, class names and the client token.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the Kafka feature?"
+    },
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the Kafka files in."
+    },
+    "flat": {
+      "type": "boolean",
+      "default": false,
+      "description": "Generate the files in the target path without a folder named after the feature."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["ts"],
+      "default": "ts",
+      "description": "The language of the generated files (ts)."
+    },
+    "sourceRoot": {
+      "type": "string",
+      "description": "The source root directory."
+    }
+  },
+  "required": ["name"]
+}

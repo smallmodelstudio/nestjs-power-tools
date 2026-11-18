@@ -1,0 +1,11 @@
+import { Controller } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
+
+@Controller()
+export class <%= className %>KafkaController {
+  @EventPattern('<%= name %>.created')
+  handleCreated(@Payload() payload: unknown) {
+    // Handle the event published to the "<%= name %>.created" topic.
+    void payload;
+  }
+}

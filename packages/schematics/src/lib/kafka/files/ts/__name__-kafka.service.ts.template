@@ -1,0 +1,22 @@
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
+import { InjectKafkaClient } from '@nestjs-power-tools/kafka';
+import { <%= tokenName %>_KAFKA_CLIENT } from './<%= name %>-kafka.constants<%= importExtension %>';
+
+@Injectable()
+export class <%= className %>KafkaService implements OnModuleInit, OnModuleDestroy {
+  constructor(@InjectKafkaClient(<%= tokenName %>_KAFKA_CLIENT) private readonly client: ClientKafka) {}
+
+  async onModuleInit() {
+    await this.client.connect();
+  }
+
+  async onModuleDestroy() {
+    await this.client.close();
+  }
+
+  /** Publishes an event to the given topic without waiting for a reply. */
+  emit<T = unknown>(topic: string, payload: T) {
+    return this.client.emit(topic, payload);
+  }
+}

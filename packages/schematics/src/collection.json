@@ -6,6 +6,11 @@
       "description": "Create a new hello world schematic.",
       "schema": "./lib/hello-world/schema.json",
       "aliases": ["hw"]
+    },
+    "kafka": {
+      "factory": "./lib/kafka/kafka.factory#main",
+      "description": "Generate a Kafka client module, service and event controller using @nestjs-power-tools/kafka.",
+      "schema": "./lib/kafka/schema.json"
     }
   }
 }

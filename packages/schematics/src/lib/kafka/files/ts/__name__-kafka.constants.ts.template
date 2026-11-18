@@ -1,0 +1,1 @@
+export const <%= tokenName %>_KAFKA_CLIENT = '<%= tokenName %>_KAFKA_CLIENT';
